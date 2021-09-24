@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "FOT-Rodin Pro M";
+  src: url("/static/fonts/FOT-Rodin-Pro-M.woff2") format("woff2"),
+    url("/static/fonts/FOT-Rodin-Pro-M.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Coco Gothic";
+  src: url("/static/fonts/CocoGothic-Heavy.woff2") format("woff2"),
+    url("/static/fonts/CocoGothic-Heavy.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
