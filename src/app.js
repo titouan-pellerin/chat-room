@@ -106,7 +106,6 @@ const init = () => {
         usersMeshes.filter((userMesh) => userMesh.userId == user.id)[0],
         colors[user.role]
       );
-    console.log(user.role);
   });
 
   usernameForm.addEventListener("submit", submitUsername);
@@ -189,7 +188,8 @@ scene.add(mirror, bottomMesh);
 /**
  * Lights
  */
-const pointLight = new THREE.PointLight(0xeeeae2, 1);
+const pointLight = new THREE.PointLight(0xffffff, 1);
+//0xeeeae2
 pointLight.position.z = 10;
 pointLight.position.x = -20;
 
@@ -197,12 +197,15 @@ const pointLight2 = new THREE.PointLight(0xfb8f2b, 2);
 pointLight2.position.z = 10;
 pointLight2.position.x = 20;
 
-const pointLight3 = new THREE.PointLight(0xeeeae2, 1);
+const pointLight3 = new THREE.PointLight(0xffffff, 1);
 pointLight2.position.z = -10;
+
+// const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 
 scene.add(pointLight);
 scene.add(pointLight2);
 scene.add(pointLight3);
+// scene.add(ambientLight);
 
 /**
  * Camera
@@ -413,14 +416,13 @@ const setCurrentCharacter = (choice) => {
 const changeMeshColor = (mesh, color) => {
   const newMaterial = new THREE.MeshStandardMaterial({
     color,
-    envMap: environmentMapTexture,
+    // envMap: environmentMapTexture,
     metalness: 1,
     roughness: 0.5,
     flatShading: false,
   });
 
   mesh.traverse((o) => {
-    console.log(o);
     if (o.isMesh && (o.name == "Torus" || o.name == "Sphere005"))
       o.material = newMaterial;
   });
@@ -571,7 +573,6 @@ const isToClose = (coordinates) => {
 };
 
 const removeUser = (user) => {
-  console.log(users.length);
   usersMeshes.forEach((userMesh) => {
     if (userMesh.userId == user.id) {
       gsap.to(userMesh.rotation, 0.75, {
