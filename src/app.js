@@ -182,7 +182,7 @@ const mirror = new Reflector(planeGeometry, {
   textureHeight: window.innerHeight * window.devicePixelRatio,
   color: 0x777777,
 });
-mirror.position.y = -0.01;
+mirror.position.y = -0.0001;
 mirror.rotation.x = -Math.PI / 2;
 
 const bottomMesh = new THREE.Mesh(planeGeometry, floorMaterial);
