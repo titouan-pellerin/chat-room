@@ -105,11 +105,11 @@ const init = () => {
   socket.on("message", (message) => addMessage(message, true));
 
   socket.on("updateRole", (user) => {
-    if (user.role.isInterger())
-      changeMeshColor(
-        usersMeshes.filter((userMesh) => userMesh.userId == user.id)[0],
-        colors[user.role]
-      );
+    // if (user.role.isInterger())
+    changeMeshColor(
+      usersMeshes.filter((userMesh) => userMesh.userId == user.id)[0],
+      colors[user.role]
+    );
     console.log(user.role);
   });
 
