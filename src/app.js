@@ -39,7 +39,7 @@ let pawPosition = 0;
 let currentUserMesh;
 
 let currentColor = 0xdbdbdb;
-let colors = [0xd11b1d, 0x79b3fb, 0x265964, 0x5f309c, 0x9f335a, 0xdbdbdb];
+let colors = [0xdbdbdb, 0xd11b1d, 0x79b3fb, 0x265964, 0x5f309c, 0x9f335a];
 
 /**
  * debug
@@ -109,6 +109,14 @@ const init = () => {
   socket.on("updateUsername", (user) => changeUsername(user));
 
   socket.on("message", (message) => addMessage(message, true));
+
+  socket.on("updateRole", (user) => {
+    changeMeshColor(
+      usersMeshes.filter((userMesh) => userMesh.userId == user.id)[0],
+      colors[user.role]
+    );
+    console.log(user.role);
+  });
 
   usernameForm.addEventListener("submit", submitUsername);
 
@@ -392,6 +400,7 @@ const setCurrentCharacter = (choice) => {
       root.style.setProperty("--secondary-color", "#fff");
       currentColor = 0xd11b1d;
       changeMeshColor(currentUserMesh, currentColor);
+      socket.emit("setRole", 1);
       break;
     case 2:
       root.style.setProperty(
@@ -404,6 +413,7 @@ const setCurrentCharacter = (choice) => {
       root.style.setProperty("--secondary-color", "#000");
       currentColor = 0x79b3fb;
       changeMeshColor(currentUserMesh, currentColor);
+      socket.emit("setRole", 2);
       break;
     case 3:
       root.style.setProperty(
@@ -416,6 +426,7 @@ const setCurrentCharacter = (choice) => {
       root.style.setProperty("--secondary-color", "#fff");
       currentColor = 0x265964;
       changeMeshColor(currentUserMesh, currentColor);
+      socket.emit("setRole", 3);
       break;
     case 4:
       root.style.setProperty(
@@ -428,6 +439,7 @@ const setCurrentCharacter = (choice) => {
       root.style.setProperty("--secondary-color", "#000");
       currentColor = 0x5f309c;
       changeMeshColor(currentUserMesh, currentColor);
+      socket.emit("setRole", 4);
       break;
     case 5:
       root.style.setProperty(
@@ -440,6 +452,7 @@ const setCurrentCharacter = (choice) => {
       root.style.setProperty("--secondary-color", "#fff");
       currentColor = 0x9f335a;
       changeMeshColor(currentUserMesh, currentColor);
+      socket.emit("setRole", 5);
       break;
     default:
       root.style.setProperty(
@@ -452,6 +465,7 @@ const setCurrentCharacter = (choice) => {
       root.style.setProperty("--secondary-color", "#000");
       currentColor = 0xdbdbdb;
       changeMeshColor(currentUserMesh, currentColor);
+      socket.emit("setRole", 0);
       break;
   }
 };
