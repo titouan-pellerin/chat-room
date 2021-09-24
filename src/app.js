@@ -6,12 +6,7 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { Reflector } from "three/examples/jsm/objects/Reflector.js";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-import { BokehPass } from "three/examples/jsm/postprocessing/BokehPass.js";
-import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
-import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
-import { RGBShiftShader } from "three/examples/jsm/shaders/RGBShiftShader.js";
-import * as dat from "dat.gui";
 import { io } from "socket.io-client";
 
 let currentUser;
@@ -42,9 +37,8 @@ let currentColor = 0xdbdbdb;
 let colors = [0xdbdbdb, 0xd11b1d, 0x79b3fb, 0x265964, 0x5f309c, 0x9f335a];
 
 /**
- * debug
+ * Debug
  */
-// const gui = new dat.GUI();
 
 window.addEventListener("DOMContentLoaded", () => {
   root = document.documentElement;
@@ -111,10 +105,11 @@ const init = () => {
   socket.on("message", (message) => addMessage(message, true));
 
   socket.on("updateRole", (user) => {
-    changeMeshColor(
-      usersMeshes.filter((userMesh) => userMesh.userId == user.id)[0],
-      colors[user.role]
-    );
+    if (user.role.isInterger())
+      changeMeshColor(
+        usersMeshes.filter((userMesh) => userMesh.userId == user.id)[0],
+        colors[user.role]
+      );
     console.log(user.role);
   });
 
@@ -155,7 +150,7 @@ window.addEventListener("resize", () => {
 
   // Update renderer
   renderer.setSize(sizes.width, sizes.height);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(window.devicePixelRatio);
 });
 
 //Objects
@@ -199,27 +194,15 @@ scene.add(mirror, bottomMesh);
  * Lights
  */
 const pointLight = new THREE.PointLight(0xeeeae2, 1);
-// pointLight.position.y = 20;
 pointLight.position.z = 10;
 pointLight.position.x = -20;
 
 const pointLight2 = new THREE.PointLight(0xfb8f2b, 2);
-// pointLight.position.y = 20;
 pointLight2.position.z = 10;
 pointLight2.position.x = 20;
 
 const pointLight3 = new THREE.PointLight(0xeeeae2, 1);
-// pointLight.position.y = 20;
 pointLight2.position.z = -10;
-// pointLight2.position.x = 20;
-
-// const pointLight2 = new THREE.PointLight(0xeeeae2, 0.5);
-// pointLight2.position.y = 20;
-// pointLight2.position.z = -10;
-
-// const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-
-// // const hemisphereLight = new THREE.HemisphereLight(0xd6d6d6, 0xd6d6d6, 0.3);
 
 scene.add(pointLight);
 scene.add(pointLight2);
@@ -248,10 +231,9 @@ scene.add(camera);
 
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
-  // antialias: true,
 });
 renderer.setSize(sizes.width, sizes.height);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setPixelRatio(window.devicePixelRatio);
 
 /**
  * Animate
@@ -290,40 +272,6 @@ unrealBloomPass.strength = 0.125;
 unrealBloomPass.radius = 1.23;
 unrealBloomPass.threshold = 0.105;
 
-// gui.add(unrealBloomPass, "enabled");
-// gui.add(unrealBloomPass, "strength").min(0).max(2).step(0.001);
-// gui.add(unrealBloomPass, "radius").min(0).max(2).step(0.001);
-// gui.add(unrealBloomPass, "threshold").min(0).max(1).step(0.001);
-
-// const bokehPass = new BokehPass(scene, camera, {
-//   focus: 0,
-//   aperture: 0.00025,
-//   maxblur: 0.0195,
-
-//   width: sizes.width,
-//   height: sizes.height,
-// });
-// effectComposer.addPass(bokehPass);
-
-// gui
-//   .add(bokehPass.materialBokeh.uniforms.focus, "value")
-//   .min(0)
-//   .max(1)
-//   .step(0.001)
-//   .name("focus");
-// gui
-//   .add(bokehPass.materialBokeh.uniforms.aperture, "value")
-//   .min(0)
-//   .max(1)
-//   .step(0.0001)
-//   .name("aperture");
-// gui
-//   .add(bokehPass.materialBokeh.uniforms.maxblur, "value")
-//   .min(0)
-//   .max(1)
-//   .step(0.0001)
-//   .name("maxblur");
-
 const tick = () => {
   target.x = -mouse.x * 0.3;
   target.y = mouse.y * 0.1;
@@ -355,10 +303,6 @@ const tick = () => {
         });
       } else {
         INTERSECTED = null;
-        // gsap.to(".pseudo-hover", 0.3, {
-        //   opacity: 0,
-        //   transform: "scale(0) translate(-50%, -50%)",
-        // });
       }
     }
   } else {
