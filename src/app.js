@@ -36,10 +36,6 @@ let currentUserMesh;
 let currentColor = 0xdbdbdb;
 let colors = [0xdbdbdb, 0xd11b1d, 0x79b3fb, 0x265964, 0x5f309c, 0x9f335a];
 
-/**
- * Debug
- */
-
 window.addEventListener("DOMContentLoaded", () => {
   root = document.documentElement;
   leftPaw = document.querySelector(".left-paw");
@@ -150,7 +146,7 @@ window.addEventListener("resize", () => {
 
   // Update renderer
   renderer.setSize(sizes.width, sizes.height);
-  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
 //Objects
@@ -233,7 +229,7 @@ const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
 });
 renderer.setSize(sizes.width, sizes.height);
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 /**
  * Animate
@@ -425,10 +421,7 @@ const changeMeshColor = (mesh, color) => {
 
   mesh.traverse((o) => {
     console.log(o);
-    if (
-      o.isMesh &&
-      (o.name == "Torus" || o.name == "Sphere006" || o.name == "Sphere005")
-    )
+    if (o.isMesh && (o.name == "Torus" || o.name == "Sphere005"))
       o.material = newMaterial;
   });
 };
