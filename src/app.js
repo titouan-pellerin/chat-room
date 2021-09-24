@@ -19,7 +19,8 @@ const meshesPositions = [];
 let INTERSECTED = null;
 let raycasterOn = false;
 
-let usernameInput,
+let welcome,
+  usernameInput,
   usernameForm,
   messageInput,
   messageForm,
@@ -38,6 +39,7 @@ let colors = [0xdbdbdb, 0xd11b1d, 0x79b3fb, 0x265964, 0x5f309c, 0x9f335a];
 
 window.addEventListener("DOMContentLoaded", () => {
   root = document.documentElement;
+  welcome = document.querySelector(".welcome");
   leftPaw = document.querySelector(".left-paw");
   rightPaw = document.querySelector(".right-paw");
   catCharacter = document.querySelector(".cat-character");
@@ -188,7 +190,7 @@ scene.add(mirror, bottomMesh);
 /**
  * Lights
  */
-const pointLight = new THREE.PointLight(0xffffff, 1);
+const pointLight = new THREE.PointLight(0xffffff, 1.5);
 //0xeeeae2
 pointLight.position.z = 10;
 pointLight.position.x = -20;
@@ -197,15 +199,14 @@ const pointLight2 = new THREE.PointLight(0xfb8f2b, 2);
 pointLight2.position.z = 10;
 pointLight2.position.x = 20;
 
-const pointLight3 = new THREE.PointLight(0xffffff, 1);
-pointLight2.position.z = -10;
+const pointLight3 = new THREE.PointLight(0xffffff, 1.5);
+pointLight3.position.x = 10;
 
 // const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 
 scene.add(pointLight);
 scene.add(pointLight2);
 scene.add(pointLight3);
-// scene.add(ambientLight);
 
 /**
  * Camera
@@ -259,6 +260,7 @@ function onMouseMove(event) {
  */
 const effectComposer = new EffectComposer(renderer);
 effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
 effectComposer.setSize(sizes.width, sizes.height);
 
 const renderPass = new RenderPass(scene, camera);
@@ -441,13 +443,18 @@ const submitUsername = (e) => {
   if (usernameInput.value.trim() != "") {
     socket.emit("setUsername", usernameInput.value);
     usernameInput.value = "";
-    document.querySelector(".welcome").remove();
-    canvas.classList.remove("hide");
-    messageForm.classList.remove("hide");
-    chatContainer.classList.remove("hide");
-    messageInput.focus();
-    raycasterOn = true;
-    document.addEventListener("mousemove", onMouseMove, false);
+    welcome.classList.add("animate");
+    document.querySelector(".welcome-background").classList.add("animate");
+    setTimeout(() => {
+      welcome.remove();
+      canvas.classList.remove("hide");
+      chatContainer.classList.remove("hide");
+      messageInput.focus();
+      raycasterOn = true;
+      document.addEventListener("mousemove", onMouseMove, false);
+      messageForm.classList.add("animate");
+      chatContainer.classList.add("animate");
+    }, 700);
   }
 };
 
