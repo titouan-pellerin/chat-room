@@ -151,16 +151,6 @@ window.addEventListener("resize", () => {
 });
 
 //Objects
-const cubeTextureLoader = new THREE.CubeTextureLoader();
-
-const environmentMapTexture = cubeTextureLoader.load([
-  "/assets/textures/environmentMaps/0/px.jpg",
-  "/assets/textures/environmentMaps/0/nx.jpg",
-  "/assets/textures/environmentMaps/0/py.jpg",
-  "/assets/textures/environmentMaps/0/ny.jpg",
-  "/assets/textures/environmentMaps/0/pz.jpg",
-  "/assets/textures/environmentMaps/0/nz.jpg",
-]);
 
 const textureLoader = new THREE.TextureLoader();
 const normal3 = textureLoader.load("/assets/textures/matcaps/3.png");
@@ -524,9 +514,8 @@ const addUser = (user) => {
           currentUserMesh = userMesh;
           changeMeshColor(userMesh, currentColor);
         } else {
-          let color = colors[Math.floor(Math.random() * 6)];
-          changeMeshColor(userMesh, color);
-          userMesh.userColor = color;
+          changeMeshColor(userMesh, colors[0]);
+          userMesh.userColor = colors[0];
         }
         scene.add(userMesh);
       });
