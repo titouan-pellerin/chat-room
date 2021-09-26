@@ -56,7 +56,7 @@ window.addEventListener("DOMContentLoaded", () => {
 /**
  * Socket.io
  */
-const socket = io("https://whispering-chamber-09886.herokuapp.com");
+const socket = io("https://chat-room-server-bddi.herokuapp.com");
 
 // Emit and Listeners
 const init = () => {
