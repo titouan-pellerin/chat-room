@@ -1,6 +1,6 @@
 # WebGL Template
 
-Demo : [https://reverent-wright-3c8fe8.netlify.app](https://reverent-wright-3c8fe8.netlify.app)
+Demo : [https://chat-room-bddi.netlify.app](https://chat-room-bddi.netlify.app)
 
 ## Setup
 
